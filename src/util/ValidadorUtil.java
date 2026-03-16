@@ -1,18 +1,24 @@
 package util;
 
 public class ValidadorUtil {
+    public static boolean validarNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) return false;
+        String nomeLimpo = nome.trim();
+        if(!nomeLimpo.matches("[a-zA-Zà-úÀ-Ú ]+")) {
+            return false;
+        }
+        return nomeLimpo.length() >= 2;
+    }
+
     public static boolean validarCPF(String cpf) {
         if (cpf == null) return false;
-
         String cpfLimpo = cpf.replaceAll("[^0-9]", "");
-
         if (cpfLimpo.length() != 11) return false;
         return !cpfLimpo.equals("00000000000");
     }
 
     public static boolean validarDataNascimento(String data) {
         if (data == null && data.length() != 10) return false;
-
         try {
             String[] partes = data.split("/");
             if (partes.length != 3) return false;

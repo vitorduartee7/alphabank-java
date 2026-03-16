@@ -32,6 +32,13 @@ public class Main {
         String cpf = MenuUtil.lerString("CPF: ");
         String dataNascimento = MenuUtil.lerString("Data de Nascimento: ");
 
+        if(!ValidadorUtil.validarNome(nome)) {
+            System.out.println("=============");
+            System.out.println("Nome inválido!");
+            System.out.println("=============");
+            return;
+        }
+
         if (!ValidadorUtil.validarCPF(cpf)) {
             System.out.println("=============");
             System.out.println("CPF invalido!");
@@ -41,7 +48,7 @@ public class Main {
 
         if (!ValidadorUtil.validarDataNascimento(dataNascimento)) {
             System.out.println("=============");
-            System.out.println("Data inválida! Use dd/MM/yyyy");
+            System.out.println("Data inválida! Use dd/mm/yyyy");
             System.out.println("=============");
             return;
         }
@@ -58,6 +65,13 @@ public class Main {
         String cpf = MenuUtil.lerString("CPF: ");
         String dataNascimento = MenuUtil.lerString("Data de Nascimento: ");
 
+        if(!ValidadorUtil.validarNome(nome)) {
+            System.out.println("=============");
+            System.out.println("Nome inválido!");
+            System.out.println("=============");
+            return;
+        }
+
         if (!ValidadorUtil.validarCPF(cpf)) {
             System.out.println("=============");
             System.out.println("CPF invalido!");
@@ -66,7 +80,7 @@ public class Main {
         }
 
         if (!ValidadorUtil.validarDataNascimento(dataNascimento)) {
-            System.out.println("Data inválida! Use dd/MM/yyyy");
+            System.out.println("Data inválida! Use dd/mm/yyyy");
             return;
         }
 
@@ -159,8 +173,24 @@ public class Main {
     }
 
     public static void listarContas(){
-        System.out.println("\n=== TODAS CONTAS ===");
-        banco.listarTodasContas();
-        System.out.println("=============");
+        if(banco.getContas().isEmpty()) {
+            System.out.println("Nenhuma conta cadastrada!");
+            return;
+        }
+
+        System.out.println("\nEXTRATO COMPLETO:");
+        System.out.println("═".repeat(60));
+
+        for(int i = 0; i < banco.getContas().size(); i++) {
+            Conta c = banco.getContas().get(i);
+            System.out.printf("[%d] %-10s | %-6s | %-12s | %s%n",
+                    i+1,
+                    c.getNumeroConta(),
+                    c.getAgencia(),
+                    ValidadorUtil.formatarMoeda(c.getSaldo()),
+                    c.getTitular().getNome()
+            );
+        }
+        System.out.println("═".repeat(60));
     }
 }
