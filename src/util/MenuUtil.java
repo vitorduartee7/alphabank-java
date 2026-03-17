@@ -3,7 +3,7 @@ package util;
 import java.util.Scanner;
 
 public class MenuUtil {
-    private static Scanner input = new Scanner(System.in);
+    private static final Scanner input = new Scanner(System.in);
 
     public static void mostrarMenuPrincipal(){
         System.out.println("\n=== ALPHA BANK ===");
@@ -16,6 +16,7 @@ public class MenuUtil {
         System.out.println("[7] Listar Contas");
         System.out.println("[0] Sair");
         System.out.print("Escolha: ");
+        System.out.println("==================");
     }
 
     public static int lerInt(String mensagem) {
