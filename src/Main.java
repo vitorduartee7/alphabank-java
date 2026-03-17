@@ -188,7 +188,7 @@ public class Main {
                     c.getNumeroConta(),
                     c.getAgencia(),
                     ValidadorUtil.formatarMoeda(c.getSaldo()),
-                    c.getTitular().getNome()
+                    c.getTitular().nome()
             );
         }
         System.out.println("═".repeat(60));

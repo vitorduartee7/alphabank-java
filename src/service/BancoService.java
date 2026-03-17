@@ -4,7 +4,7 @@ import model.*;
 import java.util.ArrayList;
 
 public class BancoService {
-    private ArrayList<Conta> contas = new ArrayList<>();
+    final private ArrayList<Conta> contas = new ArrayList<>();
 
     public ArrayList<Conta> getContas() {
         return contas;
@@ -29,12 +29,6 @@ public class BancoService {
             if (conta.getNumeroConta().equals(numero)) return conta;
         }
         return null;
-    }
-
-    public void listarTodasContas() {
-        for (Conta conta : contas) {
-            System.out.println(conta);
-        }
     }
 
     public boolean transferir(String origemNum, String destinoNum, double valor){

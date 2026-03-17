@@ -1,15 +1,15 @@
 package model;
 
-public abstract class Conta {
-    private String numeroConta;
-    private String agencia;
+public class Conta {
+    final private String numeroConta;
+    final private String agencia;
     private double saldo;
-    private Pessoa titular;
+    final private Pessoa titular;
 
     public Conta(String numeroConta, String agencia, double saldo, Pessoa titular) {
-        setNumeroConta(numeroConta);
-        setAgencia(agencia);
-        setTitular(titular);
+        this.numeroConta = numeroConta;
+        this.agencia = agencia;
+        this.titular = titular;
         this.saldo = 0;
     }
 
@@ -29,19 +29,9 @@ public abstract class Conta {
         return titular;
     }
 
-    public void setNumeroConta(String numeroConta) {
-        this.numeroConta = numeroConta;
+    public double calcularRendimento() {
+        return 0;
     }
-
-    public void setTitular(Pessoa titular) {
-        this.titular = titular;
-    }
-
-    public void setAgencia(String agencia) {
-        this.agencia = agencia;
-    }
-
-    public abstract double calcularRendimento();
 
     public boolean sacar(double valor) {
         if (valor <= getSaldo()) {
