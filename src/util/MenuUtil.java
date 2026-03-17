@@ -20,18 +20,28 @@ public class MenuUtil {
 
     public static int lerInt(String mensagem) {
         System.out.print(mensagem);
-        return input.nextInt();
+        while(!input.hasNextInt()) {
+            System.out.println("Digite um número válido!");
+            input.next();
+        }
+        int valor = input.nextInt();
+        input.nextLine();
+        return valor;
     }
 
     public static double lerDouble(String mensagem) {
         System.out.print(mensagem);
-        return input.nextDouble();
+        while(!input.hasNextDouble()) {
+            System.out.println("Digite um número válido!");
+            input.next();
+        }
+        double valor = input.nextDouble();
+        input.nextLine();
+        return valor;
     }
 
     public static String lerString(String mensagem) {
         System.out.print(mensagem);
-        input.nextLine();
-        return input.next();
-
+        return input.nextLine().trim();
     }
 }
