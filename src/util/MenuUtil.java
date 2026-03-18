@@ -15,7 +15,6 @@ public class MenuUtil {
         System.out.println("[2] Criar Conta");
         System.out.println("[0] Sair");
         System.out.print("Escolha: ");
-        System.out.println("==================");
     }
 
     public static void mostrarMenuPrincipal(){
@@ -28,7 +27,6 @@ public class MenuUtil {
         System.out.println("[5] Logout");
         System.out.println("[0] Sair");
         System.out.print("Escolha: ");
-        System.out.println("==================");
     }
 
     public static void mostrarExtrato(){
