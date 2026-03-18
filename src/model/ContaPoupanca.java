@@ -1,10 +1,10 @@
 package model;
 
 public class ContaPoupanca extends Conta{
-    private double taxaJurosMensal;
+    private final double taxaJurosMensal;
 
-    public ContaPoupanca(String numeroConta, String agencia, double saldo, Pessoa titular, double taxaJurosMensal) {
-        super(numeroConta, agencia, saldo, titular);
+    public ContaPoupanca(String numeroConta, String agencia, Pessoa titular, double taxaJurosMensal) {
+        super(numeroConta, agencia, titular);
         this.taxaJurosMensal = taxaJurosMensal;
     }
 

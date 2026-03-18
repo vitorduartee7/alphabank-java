@@ -4,7 +4,7 @@ import model.*;
 import java.util.ArrayList;
 
 public class BancoService {
-    final private ArrayList<Conta> contas = new ArrayList<>();
+    private final ArrayList<Conta> contas = new ArrayList<>();
 
     public ArrayList<Conta> getContas() {
         return contas;
@@ -12,14 +12,14 @@ public class BancoService {
 
     public Conta criarContaCorrente(Pessoa titular) {
         String numeroConta = "CC" + (contas.size() + 1);
-        ContaCorrente cc = new ContaCorrente(numeroConta, "0001", 0, titular, 500);
+        ContaCorrente cc = new ContaCorrente(numeroConta, "0001", titular, 500);
         contas.add(cc);
         return cc;
     }
 
     public Conta criarContaPoupanca(Pessoa titular) {
         String numeroConta = "CP" + (contas.size() + 1);
-        ContaPoupanca cp = new ContaPoupanca(numeroConta, "0001", 0, titular, 0.67);
+        ContaPoupanca cp = new ContaPoupanca(numeroConta, "0001", titular, 0.67);
         contas.add(cp);
         return cp;
     }
