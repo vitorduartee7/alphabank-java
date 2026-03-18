@@ -2,71 +2,54 @@ import model.*;
 import service.*;
 import util.*;
 
+import java.awt.*;
+
 public class Main {
     private static final BancoService banco = new BancoService();
 
     public static void main(String[] args) {
-        executar();
+        executarMenuInicial();
     }
 
-    public static void executar(){
+    public static void executarMenuInicial() {
         int opcao;
         do {
-            MenuUtil.mostrarMenuPrincipal();
+            MenuUtil.mostrarMenuInicial();
             opcao = MenuUtil.lerInt("");
             switch (opcao) {
-                case 1: criarCorrente(); break;
-                case 2: criarPoupanca(); break;
-                case 3: depositar(); break;
-                case 4: sacar(); break;
-                case 5: transferir(); break;
-                case 6: aplicarRendimentos();  break;
-                case 7: listarContas(); break;
+                case 1: fazerLogin();  break;
+                case 2: criarUsuario();  break;
                 default: break;
             }
         } while (opcao != 0);
     }
 
-    public static void criarCorrente(){
-        System.out.println("\n=============");
-        String nome = MenuUtil.lerString("Nome: ");
-        String cpf = MenuUtil.lerString("CPF: ");
-        String dataNascimento = MenuUtil.lerString("Data de Nascimento: ");
-        System.out.println("=============");
-
-        if(!ValidadorUtil.validarNome(nome)) {
-            System.out.println("\n=============");
-            System.out.println("Nome inválido!");
-            System.out.println("=============");
-            return;
-        }
-
-        if (!ValidadorUtil.validarCPF(cpf)) {
-            System.out.println("\n=============");
-            System.out.println("CPF invalido!");
-            System.out.println("=============");
-            return;
-        }
-
-        if (!ValidadorUtil.validarDataNascimento(dataNascimento)) {
-            System.out.println("\n=============");
-            System.out.println("Data inválida! Use dd/mm/yyyy");
-            System.out.println("=============");
-            return;
-        }
-
-        Pessoa titular = new Pessoa(nome, cpf, dataNascimento);
-        Conta cc = banco.criarContaCorrente(titular);
-        System.out.println("\n=============");
-        System.out.println("Conta criada: " + cc.getNumeroConta());
-        System.out.println("=============");
+    public static void executarMenuPrincipal() {
+        int opcao;
+        do {
+            MenuUtil.mostrarMenuPrincipal();
+            opcao = MenuUtil.lerInt("");
+            switch (opcao) {
+                case 1: depositar(); break;
+                case 2: sacar(); break;
+                case 3: transferir(); break;
+                case 4: aplicarRendimentos();  break;
+                case 5: fazerLogout(); return;
+                default: break;
+            }
+        } while (opcao != 0);
     }
 
-    public static void criarPoupanca(){
+    public static void criarUsuario(){
         System.out.println("\n=============");
         String nome = MenuUtil.lerString("Nome: ");
-        String cpf = MenuUtil.lerString("CPF: ");
         String dataNascimento = MenuUtil.lerString("Data de Nascimento: ");
+        String cpf = MenuUtil.lerString("CPF: ");
+        System.out.println("=============");
+        String senha = MenuUtil.lerString("Senha: ");
+        String senha2 = MenuUtil.lerString("Digite a Senha novamente: ");
+        System.out.println("=============");
+        String conta = MenuUtil.lerString("Tipo de Conta (Corrente ou Poupança: ");
         System.out.println("=============");
 
         if(!ValidadorUtil.validarNome(nome)) {
@@ -84,26 +67,73 @@ public class Main {
         }
 
         if (!ValidadorUtil.validarDataNascimento(dataNascimento)) {
+            System.out.println("\n=============");
             System.out.println("Data inválida! Use dd/mm/yyyy");
+            System.out.println("=============");
             return;
         }
 
-        Pessoa titular = new Pessoa(nome, cpf, dataNascimento);
-        Conta cp = banco.criarContaPoupanca(titular);
+        if (!senha2.equals(senha)) {
+            System.out.println("\n=============");
+            System.out.println("A senha deve ser igual!");
+            System.out.println("=============");
+            return;
+        }
+
+        Usuario titular = new Usuario(nome, cpf, dataNascimento, senha);
+
+        if (banco.cadastrarUsuario(titular)) {
+            if (conta.equalsIgnoreCase("Corrente")) {
+                Conta cc = banco.criarContaCorrente(titular);
+                System.out.println("\n=============");
+                System.out.println("Conta criada: " + cc.getNumeroConta());
+                System.out.println("=============");
+            } else if (conta.equalsIgnoreCase("Poupanca")) {
+                Conta cp = banco.criarContaPoupanca(titular);
+                System.out.println("\n=============");
+                System.out.println("Conta criada: " + cp.getNumeroConta());
+                System.out.println("=============");
+            }
+            System.out.println("\n=============");
+            System.out.println("Cadastro realizado com sucesso!");
+            System.out.println("=============");
+        } else {
+            System.out.println("\n=============");
+            System.out.println("Erro ao cadastrar!");
+            System.out.println("=============");
+        }
+    }
+
+    public static void fazerLogin(){
         System.out.println("\n=============");
-        System.out.println("Conta criada: " + cp.getNumeroConta());
+        String cpf = MenuUtil.lerString("CPF: ");
+        String senha = MenuUtil.lerString("Senha: ");
+        System.out.println("=============");
+
+        if (banco.login(cpf, senha)) {
+            System.out.println("=============");
+            System.out.println("Login realizado com sucesso!");
+            System.out.println("=============");
+            executarMenuPrincipal();
+        } else {
+            System.out.println("\n=============");
+            System.out.println("Erro ao fazer login!");
+            System.out.println("=============");
+        }
+    }
+
+    public static void fazerLogout(){
+        banco.logout();
+        System.out.println("\n=============");
+        System.out.println("Logout realizado!");
         System.out.println("=============");
     }
 
     public static void depositar(){
-        System.out.println("\n=============");
-        String num = MenuUtil.lerString("Conta: ");
-        System.out.println("=============");
-        Conta c = banco.buscarContaPorNumero(num);
-
-        if (c == null) {
+        Conta conta = banco.getContaUsuarioLogado();
+        if (conta == null) {
             System.out.println("\n=============");
-            System.out.println("Conta nao encontrada!");
+            System.out.println("Conta inexistente!");
             System.out.println("=============");
             return;
         }
@@ -112,10 +142,10 @@ public class Main {
         double valor = MenuUtil.lerDouble("Valor do deposito: ");
         System.out.println("=============");
 
-        if (c.depositar(valor)) {
+        if (conta.depositar(valor)) {
             System.out.println("\n=============");
-            System.out.println("Depositado com sucesso!\nSaldo Atual: "
-                    + ValidadorUtil.formatarMoeda(c.getSaldo()));
+            System.out.println("Depositado com sucesso!");
+            System.out.println("Saldo Atual: " + ValidadorUtil.formatarMoeda(conta.getSaldo()));
             System.out.println("=============");
         } else {
             System.out.println("\n=============");
@@ -125,26 +155,22 @@ public class Main {
     }
 
     public static void sacar(){
-        System.out.println("\n=============");
-        String num = MenuUtil.lerString("Numero da conta: ");
-        System.out.println("=============");
-        Conta c = banco.buscarContaPorNumero(num);
-
-        if (c == null) {
+        Conta conta = banco.getContaUsuarioLogado();
+        if (conta == null) {
             System.out.println("\n=============");
-            System.out.println("Conta nao encontrada!");
+            System.out.println("Conta inexistente!");
             System.out.println("=============");
             return;
         }
 
         System.out.println("\n=============");
-        double valor = MenuUtil.lerDouble("Valor da saque: ");
+        double valor = MenuUtil.lerDouble("Valor do saque: ");
         System.out.println("=============");
 
-        if (c.sacar(valor)) {
+        if (conta.sacar(valor)) {
             System.out.println("\n=============");
-            System.out.println("Saque realizado com sucesso!\nSaldo Atual: "
-                    + ValidadorUtil.formatarMoeda(c.getSaldo()));
+            System.out.println("Saque realizado com sucesso!");
+            System.out.println("Saldo Atual: " + ValidadorUtil.formatarMoeda(conta.getSaldo()));
             System.out.println("=============");
         } else {
             System.out.println("\n=============");
@@ -154,13 +180,21 @@ public class Main {
     }
 
     public static void transferir(){
+        Conta conta = banco.getContaUsuarioLogado();
+        if (conta == null) {
+            System.out.println("\n=============");
+            System.out.println("Conta inexistente!");
+            System.out.println("=============");
+            return;
+        }
+
         System.out.println("\n=============");
-        String origem = MenuUtil.lerString("Conta origem: ");
         String destino = MenuUtil.lerString("Conta destino: ");
         double valor = MenuUtil.lerDouble("Valor da transferencia: ");
         System.out.println("=============");
 
-        if (banco.transferir(origem, destino, valor)) {
+
+        if (banco.transferir(conta.getNumeroConta(), destino, valor)) {
             System.out.println("\n=============");
             System.out.println("Transferencia realizada com sucesso!");
             System.out.println("=============");
@@ -172,43 +206,25 @@ public class Main {
     }
 
     public static void aplicarRendimentos(){
-        System.out.println("\n=============");
-        System.out.println("Aplicando Rendimentos...");
-        System.out.println("=============");
-
-        for (Conta c : banco.getContas()) {
-            double rendimento = c.calcularRendimento();
-            if (rendimento > 0) {
-                c.depositar(rendimento);
-                System.out.println("\n=============");
-                System.out.println("Rendimento " + c.getNumeroConta() + ": "
-                        + ValidadorUtil.formatarMoeda(rendimento));
-                System.out.println("=============");
-            }
-        }
-    }
-
-    public static void listarContas(){
-        if(banco.getContas().isEmpty()) {
-            System.out.println("=============");
-            System.out.println("Nenhuma conta cadastrada!");
+        Conta conta = banco.getContaUsuarioLogado();
+        if (conta == null) {
+            System.out.println("\n=============");
+            System.out.println("Conta inexistente!");
             System.out.println("=============");
             return;
         }
 
-        System.out.println("\nEXTRATO COMPLETO:");
-        System.out.println("═".repeat(60));
+        System.out.println("\n=============");
+        System.out.println("Aplicando Rendimentos...");
+        System.out.println("=============");
 
-        for(int i = 0; i < banco.getContas().size(); i++) {
-            Conta c = banco.getContas().get(i);
-            System.out.printf("[%d] %-10s | %-6s | %-12s | %s%n",
-                    i+1,
-                    c.getNumeroConta(),
-                    c.getAgencia(),
-                    ValidadorUtil.formatarMoeda(c.getSaldo()),
-                    c.getTitular().nome()
-            );
+        double rendimento = conta.calcularRendimento();
+        if (rendimento > 0) {
+            conta.depositar(rendimento);
+            System.out.println("\n=============");
+            System.out.println("Rendimento " + conta.getNumeroConta() + ": "
+                    + ValidadorUtil.formatarMoeda(rendimento));
+            System.out.println("=============");
         }
-        System.out.println("═".repeat(60));
     }
 }
