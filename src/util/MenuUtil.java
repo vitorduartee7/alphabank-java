@@ -14,6 +14,8 @@ public class MenuUtil {
         System.out.println("[1] Fazer Login");
         System.out.println("[2] Criar Conta");
         System.out.println("[0] Sair");
+        System.out.print("Escolha: ");
+        System.out.println("==================");
     }
 
     public static void mostrarMenuPrincipal(){
