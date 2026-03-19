@@ -29,8 +29,8 @@ public class MenuUtil {
     }
 
     public static void mostrarExtrato(Usuario usuario, Double saldo) {
-        System.out.println("\n=============");
-        System.out.printf(usuario.getNome() + " R$ %.2f" + saldo);
+        System.out.println("=============");
+        System.out.printf(usuario.getNome() + " R$ %.2f", saldo);
         System.out.println("\n=============");
     }
 

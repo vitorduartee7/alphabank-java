@@ -98,14 +98,11 @@ public class Main {
                 Conta cc = banco.criarContaCorrente(titular);
                 System.out.println("\n=============");
                 System.out.println("Conta criada: " + cc.getNumeroConta());
-                System.out.println("=============");
             } else if (conta.equalsIgnoreCase("Poupanca")) {
                 Conta cp = banco.criarContaPoupanca(titular);
                 System.out.println("\n=============");
                 System.out.println("Conta criada: " + cp.getNumeroConta());
-                System.out.println("=============");
             }
-            System.out.println("\n=============");
             System.out.println("Cadastro realizado com sucesso!");
             System.out.println("=============");
         } else {
