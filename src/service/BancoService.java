@@ -1,6 +1,6 @@
 package service;
-import model.*;
 
+import model.*;
 import java.util.ArrayList;
 
 public class BancoService {

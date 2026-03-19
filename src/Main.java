@@ -1,7 +1,6 @@
 import model.*;
 import service.*;
 import util.*;
-
 import java.awt.*;
 
 public class Main {
@@ -25,9 +24,10 @@ public class Main {
     }
 
     public static void executarMenuPrincipal() {
+        Conta conta = banco.getContaUsuarioLogado();
         int opcao;
         do {
-            MenuUtil.mostrarMenuPrincipal();
+            MenuUtil.mostrarMenuPrincipal(banco.getUsuarioLogado(), conta.getSaldo());
             opcao = MenuUtil.lerInt("");
             switch (opcao) {
                 case 1: depositar(); break;
@@ -49,8 +49,7 @@ public class Main {
         String senha = MenuUtil.lerString("Senha: ");
         String senha2 = MenuUtil.lerString("Digite a Senha novamente: ");
         System.out.println("=============");
-        String conta = MenuUtil.lerString("Tipo de Conta (Corrente ou Poupança: ");
-        System.out.println("=============");
+        String conta = MenuUtil.lerString("Tipo de Conta (Corrente ou Poupança): ");
 
         if(!ValidadorUtil.validarNome(nome)) {
             System.out.println("\n=============");
@@ -73,6 +72,18 @@ public class Main {
             return;
         }
 
+        if (!ValidadorUtil.validarSenha(senha)) {
+            System.out.println("\n=============");
+            System.out.println("""
+                    A senha deve ter:
+                            - 8+ caracteres
+                            - 1 MAIÚSCULA (A-Z)
+                            - 1 número (0-9)
+                            - 1 especial (@#$%^&+=!?-)
+                            - 1 minúscula (a-z)""");
+            System.out.println("=============");
+            return;
+        }
         if (!senha2.equals(senha)) {
             System.out.println("\n=============");
             System.out.println("A senha deve ser igual!");

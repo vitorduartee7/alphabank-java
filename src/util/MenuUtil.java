@@ -1,8 +1,7 @@
 package util;
 
-import model.Conta;
+import model.*;
 import service.BancoService;
-
 import java.util.Scanner;
 
 public class MenuUtil {
@@ -17,9 +16,9 @@ public class MenuUtil {
         System.out.print("Escolha: ");
     }
 
-    public static void mostrarMenuPrincipal(){
+    public static void mostrarMenuPrincipal(Usuario usuario, Double saldo){
         System.out.println("\n=== ALPHA BANK ===");
-        mostrarExtrato();
+        mostrarExtrato(usuario, saldo);
         System.out.println("[1] Depositar");
         System.out.println("[2] Sacar");
         System.out.println("[3] Transferir");
@@ -29,28 +28,18 @@ public class MenuUtil {
         System.out.print("Escolha: ");
     }
 
-    public static void mostrarExtrato(){
+    public static void mostrarExtrato(Usuario usuario, Double saldo) {
         System.out.println("\n=============");
-        System.out.println("SALDO:");
-        System.out.println("═".repeat(60));
-
-        for(int i = 0; i < service.getContas().size(); i++) {
-            Conta c = service.getContas().get(i);
-            System.out.printf("[%d] %-10s | %-6s | %-12s | %s%n",
-                    i+1,
-                    c.getNumeroConta(),
-                    c.getAgencia(),
-                    ValidadorUtil.formatarMoeda(c.getSaldo()),
-                    c.getTitular().getNome()
-            );
-        }
-        System.out.println("═".repeat(60));
+        System.out.printf(usuario.getNome() + " R$ %.2f" + saldo);
+        System.out.println("\n=============");
     }
 
     public static int lerInt(String mensagem) {
         System.out.print(mensagem);
         while(!input.hasNextInt()) {
+            System.out.println("\n=============");
             System.out.println("Digite um número válido!");
+            System.out.println("=============");
             input.next();
         }
         int valor = input.nextInt();
@@ -61,7 +50,9 @@ public class MenuUtil {
     public static double lerDouble(String mensagem) {
         System.out.print(mensagem);
         while(!input.hasNextDouble()) {
+            System.out.println("\n=============");
             System.out.println("Digite um número válido!");
+            System.out.println("=============");
             input.next();
         }
         double valor = input.nextDouble();

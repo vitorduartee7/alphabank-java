@@ -35,6 +35,11 @@ public class ValidadorUtil {
         }
     }
 
+    public static boolean validarSenha(String senha) {
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,16}$";
+        return senha.matches(regex);
+    }
+
     public static String formatarMoeda(double valor) {
         return String.format("R$ %.2f", valor)
                 .replace(".", ",")
