@@ -1,7 +1,7 @@
 # 🏦 Alpha Bank - Sistema Bancário Java
 Neste projeto, foi explorado os conceitos de **Modelagem de Classes com UML** e **Programação Orientada a Objetos (POO)** em Java, criando um **sistema bancário completo** com herança, polimorfismo e encapsulamento.
 
-## Descrição do Projeto
+## 📌 Descrição do Projeto
 O **Alpha Bank** é um sistema bancário completo que simula as operações de um banco real. O projeto implementa:
 - **Conta Corrente**: Com cheque especial e operações básicas (saque, depósito, transferência)  
 - **Conta Poupança**: Com cálculo automático de rendimentos mensais  
@@ -17,6 +17,19 @@ O **Alpha Bank** é um sistema bancário completo que simula as operações de u
 - ✅ **Formatação Monetária**: R$ 1.234,56
 - ✅ **Listagem Completa**: Extrato de todas as contas
 - ✅ **Tratamento de Erros**: Contas inexistentes, saldo insuficiente
+- 🆕 Sistema de login e autenticação
+- 🆕 Controle de acesso por usuário
+
+## 🆕 Novas implementações:
+- 🔐 Sistema de Login com CPF + senha
+- 👥 Cadastro com usuário único (validação completa)
+- 📱 Dois menus separados: Inicial e Principal
+- 🔒 Controle de acesso: usuário visualiza apenas suas contas
+- 🚪 Login e Logout no sistema
+- 📋 Extrato automático no menu principal
+- ✅ Validação completa: nome, data e CPF
+- 🎨 Melhoria de UX no terminal: tabelas e separadores
+-🔒 Encapsulamento mais rigoroso com uso de final
 
 ## 🛠️ Tecnologias e Conceitos Abordados
 Durante o desenvolvimento, foi aplicado:
