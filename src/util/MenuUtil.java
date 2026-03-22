@@ -1,12 +1,10 @@
 package util;
 
 import model.*;
-import service.BancoService;
 import java.util.Scanner;
 
 public class MenuUtil {
     private static final Scanner input = new Scanner(System.in);
-    private static final BancoService service = new BancoService();
 
     public static void mostrarMenuInicial() {
         System.out.println("\n=== ALPHA BANK ===");

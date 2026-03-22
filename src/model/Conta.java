@@ -3,10 +3,10 @@ package model;
 public abstract class Conta {
     private final String numeroConta;
     private final String agencia;
+    private final Usuario titular;
     private double saldo = 0;
-    private final Pessoa titular;
 
-    public Conta(String numeroConta, String agencia, Pessoa titular) {
+    public Conta(String numeroConta, String agencia, Usuario titular) {
         this.numeroConta = numeroConta;
         this.agencia = agencia;
         this.titular = titular;
@@ -16,15 +16,11 @@ public abstract class Conta {
         return numeroConta;
     }
 
-    public String getAgencia() {
-        return agencia;
-    }
-
     public double getSaldo() {
         return saldo;
     }
 
-    public Pessoa getTitular() {
+    public Usuario getTitular() {
         return titular;
     }
 
